@@ -64,8 +64,6 @@ const galleryItems = [
   },
 ];
 
-// GalleryEl.addEventListener('click', onMakeGallery)
-
 const galleryEl = document.querySelector(".js-gallery");
 const galleryMarkup = createGalleryElMarkup(galleryItems);
 
@@ -90,3 +88,5 @@ function createGalleryElMarkup(galleryItems) {
     })
     .join("");
 }
+
+// GalleryEl.addEventListener('click', onMakeGallery)
