@@ -1,6 +1,9 @@
 import galleryItems from "./gallery_items.js";
 
 const galleryEl = document.querySelector(".js-gallery");
+const imgCardModal = document.querySelector(".lightbox__image");
+const boxModal = document.querySelector(".js-lightbox");
+
 const galleryMarkup = createGalleryElMarkup(galleryItems);
 
 galleryEl.insertAdjacentHTML("afterbegin", galleryMarkup);
@@ -24,11 +27,28 @@ function createGalleryElMarkup(galleryItems) {
     })
     .join("");
 }
+function onOpenModal(e) {
+  const imgCard = e.target;
+  e.preventDefault();
+  if (imgCard.nodeName !== "IMG") return;
+
+  imgCardModal.attributes.src.value = imgCard.dataset.source;
+
+  boxModal.classList.add("is-open");
+  // console.dir(imgCard);
+  // console.dir(imgCardModal.classList);
+
+  // console.log(imgCard);
+
+  // console.log(imgCard.dataset.source);
+  // console.log(imgCard.attributes.src.value);
+  // console.log(imgCard.src);
+}
 
 function getDown(e) {
   console.log("keydown", e.code);
 }
-
+galleryEl.addEventListener("click", onOpenModal);
 window.addEventListener("keydown", getDown);
 
 // window.addEventListener("keyup", (e) => {
@@ -37,10 +57,10 @@ window.addEventListener("keydown", getDown);
 addLoadingLazy();
 
 function addLoadingLazy() {
-  const galEl = document.querySelectorAll(".gallery__image");
+  const galleryEl = document.querySelectorAll(".gallery__image");
 
   if ("loading" in HTMLImageElement.prototype) {
-    galEl.forEach((item) => (item.loading = "lazy"));
+    galleryEl.forEach((item) => (item.loading = "lazy"));
   } else {
     const scriptLazy = document.createElement("script");
     scriptLazy.src =
