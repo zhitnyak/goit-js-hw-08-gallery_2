@@ -1,68 +1,4 @@
-const galleryItems = [
-  {
-    preview:
-      "https://cdn.pixabay.com/photo/2019/05/14/16/43/himilayan-blue-poppy-4202825__340.jpg",
-    original:
-      "https://cdn.pixabay.com/photo/2019/05/14/16/43/himilayan-blue-poppy-4202825_1280.jpg",
-    description: "Hokkaido Flower",
-  },
-  {
-    preview:
-      "https://cdn.pixabay.com/photo/2019/05/14/22/05/container-4203677__340.jpg",
-    original:
-      "https://cdn.pixabay.com/photo/2019/05/14/22/05/container-4203677_1280.jpg",
-    description: "Container Haulage Freight",
-  },
-  {
-    preview:
-      "https://cdn.pixabay.com/photo/2019/05/16/09/47/beach-4206785__340.jpg",
-    original:
-      "https://cdn.pixabay.com/photo/2019/05/16/09/47/beach-4206785_1280.jpg",
-    description: "Aerial Beach View",
-  },
-  {
-    preview:
-      "https://cdn.pixabay.com/photo/2016/11/18/16/19/flowers-1835619__340.jpg",
-    original:
-      "https://cdn.pixabay.com/photo/2016/11/18/16/19/flowers-1835619_1280.jpg",
-    description: "Flower Blooms",
-  },
-  {
-    preview:
-      "https://cdn.pixabay.com/photo/2018/09/13/10/36/mountains-3674334__340.jpg",
-    original:
-      "https://cdn.pixabay.com/photo/2018/09/13/10/36/mountains-3674334_1280.jpg",
-    description: "Alpine Mountains",
-  },
-  {
-    preview:
-      "https://cdn.pixabay.com/photo/2019/05/16/23/04/landscape-4208571__340.jpg",
-    original:
-      "https://cdn.pixabay.com/photo/2019/05/16/23/04/landscape-4208571_1280.jpg",
-    description: "Mountain Lake Sailing",
-  },
-  {
-    preview:
-      "https://cdn.pixabay.com/photo/2019/05/17/09/27/the-alps-4209272__340.jpg",
-    original:
-      "https://cdn.pixabay.com/photo/2019/05/17/09/27/the-alps-4209272_1280.jpg",
-    description: "Alpine Spring Meadows",
-  },
-  {
-    preview:
-      "https://cdn.pixabay.com/photo/2019/05/16/21/10/landscape-4208255__340.jpg",
-    original:
-      "https://cdn.pixabay.com/photo/2019/05/16/21/10/landscape-4208255_1280.jpg",
-    description: "Nature Landscape",
-  },
-  {
-    preview:
-      "https://cdn.pixabay.com/photo/2019/05/17/04/35/lighthouse-4208843__340.jpg",
-    original:
-      "https://cdn.pixabay.com/photo/2019/05/17/04/35/lighthouse-4208843_1280.jpg",
-    description: "Lighthouse Coast Sea",
-  },
-];
+import galleryItems from "./gallery_items.js";
 
 const galleryEl = document.querySelector(".js-gallery");
 const galleryMarkup = createGalleryElMarkup(galleryItems);
@@ -89,4 +25,30 @@ function createGalleryElMarkup(galleryItems) {
     .join("");
 }
 
-// GalleryEl.addEventListener('click', onMakeGallery)
+function getDown(e) {
+  console.log("keydown", e.code);
+}
+
+window.addEventListener("keydown", getDown);
+
+// window.addEventListener("keyup", (e) => {
+//   console.log("keyup", e.code, e.key);
+// });
+addLoadingLazy();
+
+function addLoadingLazy() {
+  const galEl = document.querySelectorAll(".gallery__image");
+
+  if ("loading" in HTMLImageElement.prototype) {
+    galEl.forEach((item) => (item.loading = "lazy"));
+  } else {
+    const scriptLazy = document.createElement("script");
+    scriptLazy.src =
+      "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js";
+    scriptLazy.integrity =
+      "sha512-q583ppKrCRc7N5O0n2nzUiJ+suUv7Et1JGels4bXOaMFQcamPk9HjdUknZuuFjBNs7tsMuadge5k9RzdmO+1GQ==";
+    scriptLazy.crossorigin = "anonymous";
+    scriptLazy.referrerpolicy = "no-referrer";
+    document.body.appendChild(scriptLazy);
+  }
+}
