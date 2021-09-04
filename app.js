@@ -5,12 +5,11 @@ const imgCardModal = document.querySelector(".lightbox__image");
 const boxModal = document.querySelector(".js-lightbox");
 const closeModalBtn = document.querySelector('[data-action="close-lightbox"]');
 const overlayModal = document.querySelector(".lightbox__overlay");
+const renderingGalleryEl = document.querySelectorAll(".gallery__image");
 
 galleryEl.addEventListener("click", onOpenModal);
 closeModalBtn.addEventListener("click", onCloseModal);
 overlayModal.addEventListener("click", onCloseModalOverlayClick);
-
-// window.addEventListener("keydown", getDown);
 
 const galleryMarkup = createGalleryElMarkup(galleryItems);
 
@@ -37,29 +36,22 @@ function createGalleryElMarkup(galleryItems) {
 }
 function onOpenModal(e) {
   const imgCard = e.target;
+
   e.preventDefault();
   if (imgCard.nodeName !== "IMG") return;
 
   imgCardModal.attributes.src.value = imgCard.dataset.source;
-
   boxModal.classList.add("is-open");
 
   window.addEventListener("keydown", onEscKeyPress);
-
-  // console.dir(imgCard);
-  // console.dir(imgCardModal.classList);
-
-  // console.log(imgCard);
-
-  // console.log(imgCard.dataset.source);
-  // console.log(imgCard.attributes.src.value);
-  // console.log(imgCard.src);
+  window.addEventListener("keydown", onChangeNextImg);
 }
 
 function onCloseModal() {
   boxModal.classList.remove("is-open");
   imgCardModal.src = "";
   window.removeEventListener("keydown", onEscKeyPress);
+  window.removeEventListener("keydown", onChangeNextImg);
 }
 
 function onCloseModalOverlayClick(e) {
@@ -71,17 +63,32 @@ function onCloseModalOverlayClick(e) {
 function onEscKeyPress(e) {
   if (e.code === "Escape") {
     onCloseModal();
-    console.log("keydown", e.code);
   }
+}
+
+function onChangeNextImg(e) {
+  // console.dir(e.target);
+  [...renderingGalleryEl].map((e, idx) => {
+    console.log(e);
+    if (e.code === "ArrowRight") {
+      idx === imgCardModal.length - 1;
+      console.log(idx);
+      console.log(imgCardModal[idx - 1]);
+      return imgCardModal[idx - 1];
+    }
+    if (e.code === "ArrowLeft") {
+      idx === imgCardModal.length + 1;
+      return imgCardModal[idx + 1];
+    }
+  });
+  // console.dir(imgCardModal.attributes.src.value);
 }
 
 addLoadingLazy();
 
 function addLoadingLazy() {
-  const galleryEl = document.querySelectorAll(".gallery__image");
-
   if ("loading" in HTMLImageElement.prototype) {
-    galleryEl.forEach((item) => (item.loading = "lazy"));
+    renderingGalleryEl.forEach((item) => (item.loading = "lazy"));
   } else {
     const scriptLazy = document.createElement("script");
     scriptLazy.src =
