@@ -5,7 +5,6 @@ const imgCardModal = document.querySelector(".lightbox__image");
 const boxModal = document.querySelector(".js-lightbox");
 const closeModalBtn = document.querySelector('[data-action="close-lightbox"]');
 const overlayModal = document.querySelector(".lightbox__overlay");
-const renderingGalleryEl = document.querySelectorAll(".gallery__image");
 
 galleryEl.addEventListener("click", onOpenModal);
 closeModalBtn.addEventListener("click", onCloseModal);
@@ -19,21 +18,24 @@ function createGalleryElMarkup(galleryItems) {
   return galleryItems
     .map(({ preview, original, description }) => {
       return `<li class="gallery__item">
-    <a
-    class="gallery__link"
-    href="${original}"
-    >
-    <img
-    class="gallery__image"
-    src="${preview}"
-    data-source="${original}"
-    alt="${description}"
-    />
-    </a>
-    </li> `;
+      <a
+      class="gallery__link"
+      href="${original}"
+      >
+      <img
+      class="gallery__image"
+      src="${preview}"
+      data-source="${original}"
+      alt="${description}"
+      />
+      </a>
+      </li> `;
     })
     .join("");
 }
+
+const renderingGalleryEl = document.querySelectorAll(".gallery__image");
+
 function onOpenModal(e) {
   const imgCard = e.target;
 
@@ -45,6 +47,8 @@ function onOpenModal(e) {
 
   window.addEventListener("keydown", onEscKeyPress);
   window.addEventListener("keydown", onChangeNextImg);
+  window.addEventListener("keydown", onPressArrowRight);
+  window.addEventListener("keydown", onPressArrowLeft);
 }
 
 function onCloseModal() {
@@ -52,6 +56,8 @@ function onCloseModal() {
   imgCardModal.src = "";
   window.removeEventListener("keydown", onEscKeyPress);
   window.removeEventListener("keydown", onChangeNextImg);
+  window.removeEventListener("keydown", onPressArrowRight);
+  window.removeEventListener("keydown", onPressArrowLeft);
 }
 
 function onCloseModalOverlayClick(e) {
@@ -66,22 +72,26 @@ function onEscKeyPress(e) {
   }
 }
 
-function onChangeNextImg(e) {
-  // console.dir(e.target);
+function onPressArrowRight(e) {
+  e.code === "ArrowRight";
+}
+
+function onPressArrowLeft(e) {
+  e.code === "ArrowLeft";
+}
+
+function onChangeNextImg() {
   [...renderingGalleryEl].map((e, idx) => {
-    console.log(e);
-    if (e.code === "ArrowRight") {
+    console.dir(idx);
+    if (onPressArrowRight(e)) {
       idx === imgCardModal.length - 1;
-      console.log(idx);
-      console.log(imgCardModal[idx - 1]);
       return imgCardModal[idx - 1];
     }
-    if (e.code === "ArrowLeft") {
+    if (onPressArrowLeft(e)) {
       idx === imgCardModal.length + 1;
       return imgCardModal[idx + 1];
     }
   });
-  // console.dir(imgCardModal.attributes.src.value);
 }
 
 addLoadingLazy();
