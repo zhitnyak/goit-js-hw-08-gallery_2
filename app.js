@@ -82,12 +82,12 @@ function onPressArrowLeft(e) {
 
 function onChangeNextImg() {
   [...renderingGalleryEl].map((e, idx) => {
-    console.dir(idx);
-    if (onPressArrowRight(e)) {
+    // console.dir(idx);
+    if (onPressArrowRight) {
       idx === imgCardModal.length - 1;
       return imgCardModal[idx - 1];
     }
-    if (onPressArrowLeft(e)) {
+    if (onPressArrowLeft) {
       idx === imgCardModal.length + 1;
       return imgCardModal[idx + 1];
     }
