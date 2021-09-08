@@ -33,8 +33,7 @@ function createGalleryElMarkup(galleryItems) {
     })
     .join("");
 }
-
-const renderingGalleryEl = document.querySelectorAll(".gallery__image");
+// console.dir(createGalleryElMarkup);
 
 function onOpenModal(e) {
   const imgCard = e.target;
@@ -72,6 +71,8 @@ function onEscKeyPress(e) {
   }
 }
 
+const renderingGalleryEl = document.querySelectorAll(".gallery__image");
+
 function onPressArrowRight(e) {
   e.code === "ArrowRight";
 }
@@ -80,18 +81,22 @@ function onPressArrowLeft(e) {
   e.code === "ArrowLeft";
 }
 
-function onChangeNextImg() {
-  [...renderingGalleryEl].map((e, idx) => {
-    // console.dir(idx);
-    if (onPressArrowRight) {
-      idx === imgCardModal.length - 1;
-      return imgCardModal[idx - 1];
-    }
-    if (onPressArrowLeft) {
-      idx === imgCardModal.length + 1;
-      return imgCardModal[idx + 1];
-    }
-  });
+function onChangeNextImg(e) {
+  const imgArray = [...renderingGalleryEl].map(({ original }) => {});
+
+  const currentValueSrc = imgCardModal.getAttribute("src");
+  let idx = imgArray.indexOf(currentValueSrc);
+
+  // console.log(e.code);
+  if (e.code === "ArrowRight") {
+    idx === imgCardModal.length - 1;
+    return imgCardModal[idx - 1];
+  }
+  if (e.code === "ArrowLeft") {
+    idx === imgCardModal.length + 1;
+    return imgCardModal[idx + 1];
+  }
+  // onOpenModal();
 }
 
 addLoadingLazy();
