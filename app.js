@@ -89,27 +89,26 @@ function onChangeNextImg(e) {
     original.dataset.source;
     // console.log(original.dataset.source);
   });
-
   let idx = imgArray.indexOf(imgCardModal.getAttribute("src"));
   // console.dir(imgCardModal);
+  // console.log(renderingGalleryEl, imgArray, imgCardModal.getAttribute("src"));
 
   console.log(e.code);
-  if (e.code === "ArrowRight" && idx !== imgCardModal.length - 1) {
+  if (e.code === "ArrowRight" && idx !== imgArray.length - 1) {
     idx += 1;
     console.log(idx);
-    imgCardModal.attributes.src.value =
-      imgArray[idx].getAttribute("data-source");
+
+    imgCardModal.attributes.src.value = imgArray[idx].dataset.source;
+    // console.log(imgArray[idx]);
     console.dir(imgCardModal.attributes.src.value);
-    console.dir(imgArray[idx + 1].getAttribute("data-source"));
+    console.dir(imgArray[idx + 1].dataset.source);
   }
   if (e.code === "ArrowLeft" && idx !== 0) {
     idx -= 1;
-    imgCardModal.attributes.src.value =
-      imgArray[idx].getAttribute("data-source");
+    imgCardModal.attributes.src.value = imgArray[idx].dataset.source;
   }
   // onOpenModal();
 }
-
 addLoadingLazy();
 
 function addLoadingLazy() {
