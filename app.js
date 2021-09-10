@@ -82,7 +82,13 @@ function onPressArrowLeft(e) {
 }
 
 function onChangeNextImg(e) {
-  const imgArray = [...renderingGalleryEl].map(({ original }) => {});
+  const imgArray = [...renderingGalleryEl];
+  // console.log(imgArray);
+  imgArray.map((original) => {
+    // console.log(original);
+    original.dataset.source;
+    // console.log(original.dataset.source);
+  });
 
   const currentValueSrc = imgCardModal.getAttribute("src");
   let idx = imgArray.indexOf(currentValueSrc);
