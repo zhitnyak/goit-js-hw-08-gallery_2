@@ -46,8 +46,8 @@ function onOpenModal(e) {
 
   window.addEventListener("keydown", onEscKeyPress);
   window.addEventListener("keydown", onChangeNextImg);
-  window.addEventListener("keydown", onPressArrowRight);
-  window.addEventListener("keydown", onPressArrowLeft);
+  // window.addEventListener("keydown", onPressArrowRight);
+  // window.addEventListener("keydown", onPressArrowLeft);
 }
 
 function onCloseModal() {
@@ -55,8 +55,8 @@ function onCloseModal() {
   imgCardModal.src = "";
   window.removeEventListener("keydown", onEscKeyPress);
   window.removeEventListener("keydown", onChangeNextImg);
-  window.removeEventListener("keydown", onPressArrowRight);
-  window.removeEventListener("keydown", onPressArrowLeft);
+  // window.removeEventListener("keydown", onPressArrowRight);
+  // window.removeEventListener("keydown", onPressArrowLeft);
 }
 
 function onCloseModalOverlayClick(e) {
@@ -73,34 +73,39 @@ function onEscKeyPress(e) {
 
 const renderingGalleryEl = document.querySelectorAll(".gallery__image");
 
-function onPressArrowRight(e) {
-  e.code === "ArrowRight";
-}
+// function onPressArrowRight(e) {
+//   e.code === "ArrowRight" && idx !== imgCardModal.length - 1;
+// }
 
-function onPressArrowLeft(e) {
-  e.code === "ArrowLeft";
-}
+// function onPressArrowLeft(e) {
+//   e.code === "ArrowLeft" && idx !== 0;
+// }
 
 function onChangeNextImg(e) {
   const imgArray = [...renderingGalleryEl];
-  // console.log(imgArray);
   imgArray.map((original) => {
+    // console.log(imgArray);
     // console.log(original);
     original.dataset.source;
     // console.log(original.dataset.source);
   });
 
-  const currentValueSrc = imgCardModal.getAttribute("src");
-  let idx = imgArray.indexOf(currentValueSrc);
+  let idx = imgArray.indexOf(imgCardModal.getAttribute("src"));
+  // console.dir(imgCardModal);
 
-  // console.log(e.code);
-  if (e.code === "ArrowRight") {
-    idx === imgCardModal.length - 1;
-    return imgCardModal[idx - 1];
+  console.log(e.code);
+  if (e.code === "ArrowRight" && idx !== imgCardModal.length - 1) {
+    idx += 1;
+    console.log(idx);
+    imgCardModal.attributes.src.value =
+      imgArray[idx].getAttribute("data-source");
+    console.dir(imgCardModal.attributes.src.value);
+    console.dir(imgArray[idx + 1].getAttribute("data-source"));
   }
-  if (e.code === "ArrowLeft") {
-    idx === imgCardModal.length + 1;
-    return imgCardModal[idx + 1];
+  if (e.code === "ArrowLeft" && idx !== 0) {
+    idx -= 1;
+    imgCardModal.attributes.src.value =
+      imgArray[idx].getAttribute("data-source");
   }
   // onOpenModal();
 }
