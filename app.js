@@ -73,41 +73,29 @@ function onEscKeyPress(e) {
 
 const renderingGalleryEl = document.querySelectorAll(".gallery__image");
 
-// function onPressArrowRight(e) {
-//   e.code === "ArrowRight" && idx !== imgCardModal.length - 1;
-// }
-
-// function onPressArrowLeft(e) {
-//   e.code === "ArrowLeft" && idx !== 0;
-// }
-
 function onChangeNextImg(e) {
-  const imgArray = [...renderingGalleryEl];
-  imgArray.map((original) => {
-    // console.log(imgArray);
-    // console.log(original);
-    original.dataset.source;
-    // console.log(original.dataset.source);
-  });
+  const imgArray = [...renderingGalleryEl].map(
+    (original) => original.dataset.source
+  );
+
   let idx = imgArray.indexOf(imgCardModal.getAttribute("src"));
-  // console.dir(imgCardModal);
+  // console.dir(currentValueSrc);
   // console.log(renderingGalleryEl, imgArray, imgCardModal.getAttribute("src"));
 
-  console.log(e.code);
+  // console.log(e.code);
   if (e.code === "ArrowRight" && idx !== imgArray.length - 1) {
     idx += 1;
-    console.log(idx);
+    // console.log(idx);
 
-    imgCardModal.attributes.src.value = imgArray[idx].dataset.source;
+    imgCardModal.attributes.src.value = imgArray[idx];
     // console.log(imgArray[idx]);
-    console.dir(imgCardModal.attributes.src.value);
-    console.dir(imgArray[idx + 1].dataset.source);
+    // console.dir(imgCardModal.attributes.src.value);
+    // console.dir(imgArray[idx + 1].dataset.source);
   }
   if (e.code === "ArrowLeft" && idx !== 0) {
     idx -= 1;
-    imgCardModal.attributes.src.value = imgArray[idx].dataset.source;
+    imgCardModal.attributes.src.value = imgArray[idx];
   }
-  // onOpenModal();
 }
 addLoadingLazy();
 
